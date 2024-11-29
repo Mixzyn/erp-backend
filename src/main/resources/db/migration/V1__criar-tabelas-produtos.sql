@@ -18,14 +18,14 @@ CREATE TABLE deposito (
 );
 
 -- Tabela de Clientes
-CREATE TABLE cliente (
+/* CREATE TABLE cliente (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
     nome_cliente VARCHAR(100) NOT NULL,
     pessoa_contato VARCHAR(100),
     telefone VARCHAR(20),
     email VARCHAR(100),
     endereco TEXT
-);
+); */
 
 -- Tabela de Produtos
 CREATE TABLE produto (
@@ -52,10 +52,11 @@ CREATE TABLE estoque (
 );
 
 -- Tabela de Pedidos de Compra
-CREATE TABLE pedido_compra (
-    id_pedido_compra INT PRIMARY KEY AUTO_INCREMENT,
+-- Cada produto no pedido é registrado na tabela item_compra
+CREATE TABLE compra (
+    id_compra INT PRIMARY KEY AUTO_INCREMENT,
     id_fornecedor INT NOT NULL,
-    data_pedido DATE NOT NULL,
+    data DATE NOT NULL,
     status ENUM('Pendente', 'Processado', 'Cancelado') DEFAULT 'Pendente',
     custo_total DECIMAL(12, 2) NOT NULL,
     FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id_fornecedor),
@@ -63,23 +64,25 @@ CREATE TABLE pedido_compra (
 );
 
 -- Tabela de Itens do Pedido de Compra
-CREATE TABLE item_pedido_compra (
-    id_item_pedido_compra INT PRIMARY KEY AUTO_INCREMENT,
-    id_pedido_compra INT NOT NULL,
+-- Essa tabela especifica os itens selecionados na compra
+CREATE TABLE item_compra (
+    id_item_compra INT PRIMARY KEY AUTO_INCREMENT,
+    id_compra INT NOT NULL,
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_pedido_compra) REFERENCES pedido_compra(id_pedido_compra),
+    FOREIGN KEY (id_compra) REFERENCES compra(id_compra),
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
     CONSTRAINT chk_quantidade_compra_positiva CHECK (quantidade > 0),
     CONSTRAINT chk_preco_compra_positivo CHECK (preco_unitario >= 0)
 );
 
 -- Tabela de Pedidos de Venda
-CREATE TABLE pedido_venda (
-    id_pedido_venda INT PRIMARY KEY AUTO_INCREMENT,
+-- Cada produto no pedido é registrado na tabela item_venda
+CREATE TABLE venda (
+    id_venda INT PRIMARY KEY AUTO_INCREMENT,
     id_cliente INT NOT NULL,
-    data_pedido DATE NOT NULL,
+    data DATE NOT NULL,
     status ENUM('Pendente', 'Enviado', 'Entregue', 'Cancelado') DEFAULT 'Pendente',
     valor_total DECIMAL(12, 2) NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
@@ -87,14 +90,23 @@ CREATE TABLE pedido_venda (
 );
 
 -- Tabela de Itens do Pedido de Venda
-CREATE TABLE item_pedido_venda (
-    id_item_pedido_venda INT PRIMARY KEY AUTO_INCREMENT,
-    id_pedido_venda INT NOT NULL,
+-- Essa tabela especifica os itens selecionados na venda
+CREATE TABLE item_venda (
+    id_item_venda INT PRIMARY KEY AUTO_INCREMENT,
+    id_venda INT NOT NULL,
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_pedido_venda) REFERENCES pedido_venda(id_pedido_venda),
+    FOREIGN KEY (id_venda) REFERENCES venda(id_venda),
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
     CONSTRAINT chk_quantidade_venda_positiva CHECK (quantidade > 0),
     CONSTRAINT chk_preco_venda_positivo CHECK (preco_unitario >= 0)
 );
+
+/* CREATE TABLE NOTA_FISCAL_VENDA (
+    id_nota_fiscal_venda INT PRIMARY KEY AUTO_INCREMENT
+)
+
+CREATE TABLE NOTA_FISCAL_COMPRA (
+    id_nota_fiscal_compra INT PRIMARY KEY AUTO_INCREMENT
+) */
