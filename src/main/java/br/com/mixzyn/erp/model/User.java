@@ -31,9 +31,9 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private String password;
 
-    // crianco a relacao muitos para muitos entre usuarios e roles
+    // criando a relacao muitos para muitos entre usuarios e roles
     @ManyToMany(
-        // definindo cascateamento para ALL, todas as alteracoes na tabela seram replicadas
+        // definindo cascateamento para ALL, todas as alteracoes na tabela serao replicadas
         cascade = CascadeType.ALL,
         // define a forma de comunicacao com o banco de dados, o EAGER sempre consulta o banco de dados,
         // ja o LAZY consulta apenas quando utilizamos um atributo relacionado

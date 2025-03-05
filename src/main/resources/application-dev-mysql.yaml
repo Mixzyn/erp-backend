@@ -7,8 +7,3 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: true
-
-api:
-  security:
-    token:
-      secret: ${JWT_SECRET:my-secret-key}

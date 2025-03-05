@@ -8,10 +8,5 @@ spring:
     generate-ddl: false
     show-sql: false
 
-api:
-  security:
-    token:
-      secret: ${JWT_SECRET:my-secret-key}
-
 server:
   port : ${PORT:8080}

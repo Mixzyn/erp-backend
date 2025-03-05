@@ -16,3 +16,7 @@ info:
 spring:
   profiles:
     active: dev-h2
+
+jwt:
+  public.key: classpath:app.key.pub
+  private.key: classpath:app.key
