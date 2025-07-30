@@ -9,10 +9,11 @@ management:
 
 info:
   application:
-    name: Mixzyn ERP
+    name: Market ERP
     description: ERP para mercados
     author: joaopmaximo
     version: '@project.version@'
+
 spring:
   profiles:
     active: dev-h2

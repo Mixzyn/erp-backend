@@ -112,7 +112,7 @@ CREATE TABLE NOTA_FISCAL_COMPRA (
 ) */
 
 CREATE TABLE tb_user (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id UUID PRIMARY KEY NOT NULL,
     username VARCHAR(60) UNIQUE NOT NULL,
     password VARCHAR(60) NOT NULL
 );
@@ -123,7 +123,7 @@ CREATE TABLE tb_role (
 );
 
 CREATE TABLE tb_user_role (
-    user_id BIGINT NOT NULL,
+    user_id UUID NOT NULL,
     role_id BIGINT NOT NULL
 );
 

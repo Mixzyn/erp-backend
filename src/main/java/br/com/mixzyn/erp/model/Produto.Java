@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_produto")
+@Table(name = "tb_product")
 public class Produto extends AbstractEntity {
 
     @Column(nullable = false, length = 200)
@@ -34,5 +34,4 @@ public class Produto extends AbstractEntity {
 
     @Column(length = 100)
     private String fabricante;
-
 }
