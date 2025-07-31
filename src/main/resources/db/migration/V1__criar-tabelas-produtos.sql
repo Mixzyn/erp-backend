@@ -30,11 +30,11 @@
 -- Tabela de Produtos
 CREATE TABLE tb_produto (
     id BIGSERIAL PRIMARY KEY,
-    nome VARCHAR(200) NOT NULL,
+    descricao VARCHAR(200) NOT NULL,
     codigo VARCHAR(50) UNIQUE,
     preco_unitario DECIMAL(10, 2) NOT NULL,
-    categoria VARCHAR(100),
-    fabricante VARCHAR(100),
+    -- categoria VARCHAR(100),
+    -- fabricante VARCHAR(100),
     CONSTRAINT chk_preco_positivo CHECK (preco_unitario >= 0)
 );
 

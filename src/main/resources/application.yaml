@@ -16,7 +16,7 @@ info:
 
 spring:
   profiles:
-    active: dev-postgresql
+    active: dev-h2
 
 jwt:
   public.key: classpath:app.key.pub

@@ -7,9 +7,9 @@ import br.com.mixzyn.erp.model.Produto;
 import br.com.mixzyn.erp.service.ProdutoService;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/produtos")
 public class ProdutoController extends AbstractController<Produto>{
-    
+
     public ProdutoController(ProdutoService service) {
         super(service);
     }
