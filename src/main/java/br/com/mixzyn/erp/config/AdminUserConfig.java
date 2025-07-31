@@ -5,11 +5,11 @@ import java.util.Set;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mixzyn.erp.model.User;
 import br.com.mixzyn.erp.repository.RoleRepository;
 import br.com.mixzyn.erp.repository.UserRepository;
-import jakarta.transaction.Transactional;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner {

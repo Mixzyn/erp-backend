@@ -1,6 +1,7 @@
 package br.com.mixzyn.erp.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mixzyn.erp.dto.LoginRequest;
 import br.com.mixzyn.erp.dto.LoginResponse;
+import br.com.mixzyn.erp.model.Role;
 import br.com.mixzyn.erp.repository.UserRepository;
 
 @RestController
@@ -40,12 +42,19 @@ public class TokenController {
         var now = Instant.now();
         var expiresIn = 300L;
 
+        // retorna a role do usuario
+        var scopes = user.get().getRoles()
+            .stream()
+            .map(Role::getName)
+            .collect(Collectors.joining(" "));
+
         // construindo os atributos do jwt
         var claims = JwtClaimsSet.builder()
             .issuer("market-erp")
             .subject(user.get().getId().toString())
             .issuedAt(now)
             .expiresAt(now.plusSeconds(expiresIn))
+            .claim("scope", scopes)
             .build();
 
         // criando o jwt criptografado a partir dos atributos
