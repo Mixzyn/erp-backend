@@ -26,20 +26,28 @@ public class ProdutoService {
     }
 
     public Produto create(ProdutoDto produto) throws IllegalStateException, IOException {
-        // Cria diretório se não existir
-        File diretorio = new File(imgDir);
-        if (!diretorio.exists()) {
-            diretorio.mkdirs();
+        Produto novoProduto = new Produto();
+
+        if (produto.file() != null) {
+            // Cria diretório se não existir
+            File diretorio = new File(imgDir);
+            if (!diretorio.exists()) {
+                diretorio.mkdirs();
+            }
+
+            // Define o caminho físico onde o arquivo será salvo
+            String caminhoArquivo = imgDir + File.separator + produto.file().getOriginalFilename();
+
+            // Salva no disco
+            produto.file().transferTo(new File(caminhoArquivo));
+
+            // Define o caminho da imagem no produto
+            novoProduto.setImagePath(caminhoArquivo);
         }
 
-        // Define o caminho físico onde o arquivo será salvo
-        String caminhoArquivo = imgDir + File.separator + produto.file().getOriginalFilename();
-
-        // Salva no disco
-        produto.file().transferTo(new File(caminhoArquivo));
-
-        // Cria o produto e salva no banco
-        Produto novoProduto = new Produto(produto.descricao(), produto.codigo(), produto.precoUnitario(), caminhoArquivo);
+        novoProduto.setDescricao(produto.descricao());
+        novoProduto.setCodigo(produto.codigo());
+        novoProduto.setPrecoUnitario(produto.precoUnitario());
 
         repository.save(novoProduto);
         return novoProduto;
