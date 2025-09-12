@@ -15,7 +15,7 @@ import br.com.mixzyn.erp.service.AbstractService;
 
 public class AbstractController<T> implements IController<T> {
 
-    private AbstractService<T> service;
+    protected AbstractService<T> service;
 
     public AbstractController (AbstractService<T> service) {
         this.service = service;

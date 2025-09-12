@@ -21,3 +21,6 @@ spring:
 jwt:
   public.key: classpath:app.key.pub
   private.key: classpath:app.key
+
+app:
+  imgDir: ${user.dir}/imgs

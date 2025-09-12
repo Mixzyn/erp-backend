@@ -33,6 +33,7 @@ CREATE TABLE tb_produto (
     descricao VARCHAR(200) NOT NULL,
     codigo VARCHAR(50) UNIQUE,
     preco_unitario DECIMAL(10, 2) NOT NULL,
+    image_path VARCHAR,
     -- categoria VARCHAR(100),
     -- fabricante VARCHAR(100),
     CONSTRAINT chk_preco_positivo CHECK (preco_unitario >= 0)

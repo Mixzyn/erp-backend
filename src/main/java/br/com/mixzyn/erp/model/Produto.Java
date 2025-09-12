@@ -29,6 +29,9 @@ public class Produto extends AbstractEntity {
     @Column(name = "preco_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal precoUnitario;
 
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
+    
 /*     @Column(length = 100)
     private String categoria;
 

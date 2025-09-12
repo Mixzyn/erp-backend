@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.mixzyn.erp.model.AbstractEntity;
 
 public class AbstractService<T> implements IService<T> {
-    private JpaRepository<T, Long> repository;
+    protected JpaRepository<T, Long> repository;
 
     public AbstractService(JpaRepository<T, Long> repository) {
         this.repository = repository;

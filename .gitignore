@@ -34,3 +34,5 @@ build/
 
 app.key
 app.key.pub
+
+/imgs
