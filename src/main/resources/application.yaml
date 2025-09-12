@@ -23,4 +23,4 @@ jwt:
   private.key: classpath:app.key
 
 app:
-  imgDir: ${user.dir}/imgs
+  imgDir: ${user.dir}\imgs

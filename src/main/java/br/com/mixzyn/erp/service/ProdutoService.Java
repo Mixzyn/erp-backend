@@ -33,7 +33,7 @@ public class ProdutoService {
         }
 
         // Define o caminho físico onde o arquivo será salvo
-        String caminhoArquivo = imgDir + "/" + produto.file().getOriginalFilename();
+        String caminhoArquivo = imgDir + File.separator + produto.file().getOriginalFilename();
 
         // Salva no disco
         produto.file().transferTo(new File(caminhoArquivo));
