@@ -28,28 +28,41 @@ public class ProdutoService {
     public Produto create(ProdutoDto produto) throws IllegalStateException, IOException {
         Produto novoProduto = new Produto();
 
-        if (produto.file() != null) {
+        novoProduto.setDescricao(produto.descricao());
+        novoProduto.setCodigo(produto.codigo());
+        novoProduto.setPrecoUnitario(produto.precoUnitario());
+
+        repository.save(novoProduto);
+
+        if (produto.imagePath() != null && !produto.imagePath().isEmpty()) {
+
             // Cria diretório se não existir
             File diretorio = new File(imgDir);
             if (!diretorio.exists()) {
                 diretorio.mkdirs();
             }
 
-            // Define o caminho físico onde o arquivo será salvo
-            String caminhoArquivo = imgDir + File.separator + produto.file().getOriginalFilename();
+            // Extrai a extensão do arquivo original
+            String originalFilename = produto.imagePath().getOriginalFilename();
+            String extension = "";
+            if (originalFilename != null && originalFilename.contains(".")) {
+                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
+
+            // Define o nome padronizado: produto-{id}.extensão
+            String nomeArquivo = "produto-" + novoProduto.getId() + extension;
+            String caminhoArquivo = imgDir + File.separator + nomeArquivo;
 
             // Salva no disco
-            produto.file().transferTo(new File(caminhoArquivo));
+            produto.imagePath().transferTo(new File(caminhoArquivo));
 
-            // Define o caminho da imagem no produto
-            novoProduto.setImagePath(caminhoArquivo);
+            // Salva apenas o caminho relativo no banco
+            novoProduto.setImagePath("imgs/" + nomeArquivo);
+
+            // Atualiza o produto com o caminho da imagem
+            novoProduto = repository.save(novoProduto);
         }
 
-        novoProduto.setDescricao(produto.descricao());
-        novoProduto.setCodigo(produto.codigo());
-        novoProduto.setPrecoUnitario(produto.precoUnitario());
-
-        repository.save(novoProduto);
         return novoProduto;
     }
 

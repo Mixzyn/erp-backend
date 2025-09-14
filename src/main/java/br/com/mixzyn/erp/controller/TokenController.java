@@ -54,7 +54,7 @@ public class TokenController {
             .issuer("market-erp")
             .subject(user.get().getId().toString())
             .issuedAt(now)
-            .expiresAt(now.plusSeconds(expiresIn))
+            // .expiresAt(now.plusSeconds(expiresIn))
             .claim("scope", scopes)
             .build();
 
