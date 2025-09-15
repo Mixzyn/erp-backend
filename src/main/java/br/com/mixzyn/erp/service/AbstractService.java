@@ -25,12 +25,6 @@ public class AbstractService<T> implements IService<T> {
     }
 
     @Override
-    public T create(T entity) {
-        repository.save(entity);
-        return entity;
-    }
-
-    @Override
     public boolean update(T entity) {
         if (repository.existsById(((AbstractEntity) entity).getId())) {
             repository.save(entity);

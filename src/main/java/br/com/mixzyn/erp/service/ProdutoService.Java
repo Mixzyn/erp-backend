@@ -2,39 +2,37 @@ package br.com.mixzyn.erp.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import br.com.mixzyn.erp.dto.ProdutoDto;
-import br.com.mixzyn.erp.model.AbstractEntity;
+import br.com.mixzyn.erp.dto.ProdutoDTO;
 import br.com.mixzyn.erp.model.Produto;
 import br.com.mixzyn.erp.repository.ProdutoRepository;
 
 @Service
-public class ProdutoService {
-
+public class ProdutoService extends AbstractService<Produto> {
     @Value("${app.imgDir}")
     private String imgDir;
 
-    private ProdutoRepository repository;
-
     public ProdutoService(ProdutoRepository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
-    public Produto create(ProdutoDto produto) throws IllegalStateException, IOException {
-        Produto novoProduto = new Produto();
+    public Produto create(Produto produto) {
+        Produto novoProduto = produto;
+        return repository.save(novoProduto);
+    }
 
-        novoProduto.setDescricao(produto.descricao());
-        novoProduto.setCodigo(produto.codigo());
-        novoProduto.setPrecoUnitario(produto.precoUnitario());
+    public Produto createWithImage(ProdutoDTO produtoDTO) throws IllegalStateException, IOException {
+        Produto produto = new Produto();
 
-        repository.save(novoProduto);
+        produto.setDescricao(produtoDTO.descricao());
+        produto.setCodigo(produtoDTO.codigo());
+        produto.setPrecoUnitario(produtoDTO.precoUnitario());
 
-        if (produto.imagePath() != null && !produto.imagePath().isEmpty()) {
+        repository.save(produto);
+
+        if (produtoDTO.imagePath() != null && !produtoDTO.imagePath().isEmpty()) {
 
             // Cria diretório se não existir
             File diretorio = new File(imgDir);
@@ -43,51 +41,26 @@ public class ProdutoService {
             }
 
             // Extrai a extensão do arquivo original
-            String originalFilename = produto.imagePath().getOriginalFilename();
+            String originalFilename = produtoDTO.imagePath().getOriginalFilename();
             String extension = "";
             if (originalFilename != null && originalFilename.contains(".")) {
                 extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             }
 
             // Define o nome padronizado: produto-{id}.extensão
-            String nomeArquivo = "produto-" + novoProduto.getId() + extension;
+            String nomeArquivo = "produto-" + produto.getId() + extension;
             String caminhoArquivo = imgDir + File.separator + nomeArquivo;
 
             // Salva no disco
-            produto.imagePath().transferTo(new File(caminhoArquivo));
+            produtoDTO.imagePath().transferTo(new File(caminhoArquivo));
 
             // Salva apenas o caminho relativo no banco
-            novoProduto.setImagePath("imgs/" + nomeArquivo);
+            produto.setImagePath("imgs/" + nomeArquivo);
 
             // Atualiza o produto com o caminho da imagem
-            novoProduto = repository.save(novoProduto);
+            produto = repository.save(produto);
         }
 
-        return novoProduto;
+        return produto;
     }
-
-    public Optional<Produto> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    public List<Produto> findAll() {
-        return repository.findAll();
-    }
-
-    public boolean update(Produto produto) {
-        if (repository.existsById(((AbstractEntity) produto).getId())) {
-            repository.save(produto);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean delete(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-
 }

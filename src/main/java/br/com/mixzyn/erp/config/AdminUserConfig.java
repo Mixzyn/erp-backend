@@ -13,7 +13,6 @@ import br.com.mixzyn.erp.repository.UserRepository;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner {
-    
     private RoleRepository roleRepository;
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
@@ -42,5 +41,4 @@ public class AdminUserConfig implements CommandLineRunner {
             }
         );
     }
-    
 }

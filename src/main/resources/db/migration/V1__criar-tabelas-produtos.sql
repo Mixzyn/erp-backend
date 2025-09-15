@@ -80,7 +80,7 @@ CREATE TABLE tb_produto (
 
 -- Tabela de Pedidos de Venda
 -- Cada produto no pedido é registrado na tabela item_venda
-/* CREATE TABLE tb_venda (
+CREATE TABLE tb_venda (
     id BIGSERIAL PRIMARY KEY,
     -- id_cliente BIGINT NOT NULL,
     data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -88,11 +88,11 @@ CREATE TABLE tb_produto (
     valor_total DECIMAL(12, 2) NOT NULL,
     -- FOREIGN KEY (id_cliente) REFERENCES tb_cliente(id),
     CONSTRAINT chk_valor_positivo CHECK (valor_total >= 0)
-); */
+);
 
 -- Tabela de Itens do Pedido de Venda
 -- Essa tabela especifica os itens selecionados na venda
-/* CREATE TABLE tb_item_venda (
+CREATE TABLE tb_item_venda (
     id BIGSERIAL PRIMARY KEY,
     id_venda BIGINT NOT NULL,
     id_produto BIGINT NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE tb_produto (
     FOREIGN KEY (id_produto) REFERENCES tb_produto(id),
     CONSTRAINT chk_quantidade_venda_positiva CHECK (quantidade > 0),
     CONSTRAINT chk_preco_venda_positivo CHECK (preco_unitario >= 0)
-); */
+);
 
 /* CREATE TABLE NOTA_FISCAL_VENDA (
     id_nota_fiscal_venda BIGSERIAL PRIMARY KEY

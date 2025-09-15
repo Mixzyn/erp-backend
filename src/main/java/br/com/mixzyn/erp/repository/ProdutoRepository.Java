@@ -7,5 +7,4 @@ import br.com.mixzyn.erp.model.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    
 }

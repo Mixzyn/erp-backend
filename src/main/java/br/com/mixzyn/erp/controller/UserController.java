@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.mixzyn.erp.dto.CreateUserDto;
+import br.com.mixzyn.erp.dto.CreateUserDTO;
 import br.com.mixzyn.erp.model.Role;
 import br.com.mixzyn.erp.model.User;
 import br.com.mixzyn.erp.repository.RoleRepository;
@@ -36,7 +36,7 @@ public class UserController {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<Void> newUser(@RequestBody CreateUserDto dto) {
+    public ResponseEntity<Void> newUser(@RequestBody CreateUserDTO dto) {
         var basicRole = roleRepository.findByName(Role.Values.BASIC.name());
         var userFromDb = userRepository.findByUsername(dto.username());
 

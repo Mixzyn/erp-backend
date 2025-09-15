@@ -16,7 +16,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_role")
 public class Role extends AbstractEntity {
-    
     private String name;
 
     // definindo as roles
@@ -30,6 +29,5 @@ public class Role extends AbstractEntity {
         Values(Long roleId) {
             this.roleId = roleId;
         }
-
     }
 }

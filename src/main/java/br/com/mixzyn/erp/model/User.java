@@ -29,7 +29,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

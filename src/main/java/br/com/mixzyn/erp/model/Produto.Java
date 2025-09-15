@@ -19,7 +19,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_produto")
 public class Produto extends AbstractEntity {
-
     @Column(nullable = false, length = 200)
     private String descricao;
 

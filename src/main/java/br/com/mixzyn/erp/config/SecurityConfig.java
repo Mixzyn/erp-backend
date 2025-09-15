@@ -32,7 +32,6 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-
     @Value("${jwt.public.key}")
     private RSAPublicKey publicKey;
 
