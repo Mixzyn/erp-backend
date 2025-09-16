@@ -2,6 +2,8 @@ package br.com.mixzyn.erp.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +13,14 @@ import br.com.mixzyn.erp.repository.ProdutoRepository;
 
 @Service
 public class ProdutoService extends AbstractService<Produto> {
+    private ProdutoRepository repository;
+
     @Value("${app.imgDir}")
     private String imgDir;
 
     public ProdutoService(ProdutoRepository repository) {
         super(repository);
+        this.repository = repository;
     }
 
     public Produto create(Produto produto) {
@@ -62,5 +67,9 @@ public class ProdutoService extends AbstractService<Produto> {
         }
 
         return produto;
+    }
+
+    public Optional<Produto> findByCodigo(String codigo) {
+        return repository.findByCodigo(codigo);
     }
 }

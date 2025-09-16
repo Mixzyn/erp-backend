@@ -1,8 +1,12 @@
 package br.com.mixzyn.erp.controller;
 
+import java.util.Optional;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +48,10 @@ public class ProdutoController extends AbstractController<Produto> {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/codigo/{codigo}")
+    public ResponseEntity<Optional<Produto>> getByCodigo(@PathVariable String codigo) {
+        return ResponseEntity.ok(service.findByCodigo(codigo));
     }
 }
