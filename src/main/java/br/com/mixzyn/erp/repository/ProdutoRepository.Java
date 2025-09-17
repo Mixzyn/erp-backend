@@ -1,5 +1,6 @@
 package br.com.mixzyn.erp.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import br.com.mixzyn.erp.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     Optional<Produto> findByCodigo(String codigo);
+    List<Produto> findByDescricaoContainingIgnoreCase(String descricao);
 }

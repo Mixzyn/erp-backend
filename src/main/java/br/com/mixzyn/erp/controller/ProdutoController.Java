@@ -1,5 +1,6 @@
 package br.com.mixzyn.erp.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mixzyn.erp.dto.ProdutoDTO;
@@ -53,5 +55,10 @@ public class ProdutoController extends AbstractController<Produto> {
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<Optional<Produto>> getByCodigo(@PathVariable String codigo) {
         return ResponseEntity.ok(service.findByCodigo(codigo));
+    }
+
+    @GetMapping("/search")
+    public List<Produto> getByDescricao(@RequestParam String descricao) {
+        return service.findByDescricao(descricao);
     }
 }

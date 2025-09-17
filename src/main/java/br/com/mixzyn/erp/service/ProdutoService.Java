@@ -2,6 +2,7 @@ package br.com.mixzyn.erp.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -71,5 +72,9 @@ public class ProdutoService extends AbstractService<Produto> {
 
     public Optional<Produto> findByCodigo(String codigo) {
         return repository.findByCodigo(codigo);
+    }
+
+    public List<Produto> findByDescricao(String descricao) {
+        return repository.findByDescricaoContainingIgnoreCase(descricao);
     }
 }

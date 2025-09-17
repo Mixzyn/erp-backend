@@ -130,3 +130,15 @@ CREATE TABLE tb_user_role (
 
 INSERT INTO tb_role (id, name) VALUES (1, 'ADMIN');
 INSERT INTO tb_role (id, name) VALUES (2, 'BASIC');
+
+INSERT INTO tb_produto (descricao, codigo, preco_unitario, image_path) VALUES
+('Arroz Branco Tipo 1 5kg',       '7891234567890', 25.90, 'imgs/produto-1.png'),
+('Feijão Carioca 1kg',            '7891234567891',  8.50, 'imgs/produto-2.png'),
+('Macarrão Espaguete 500g',       '7891234567892',  4.20, 'imgs/produto-3.png'),
+('Açúcar Refinado 1kg',           '7891234567893',  3.80, 'imgs/produto-4.png'),
+('Óleo de Soja 900ml',            '7891234567894',  6.90, 'imgs/produto-5.png'),
+('Café Torrado e Moído 500g',     '7891234567895', 17.50, 'imgs/produto-6.png'),
+('Leite Integral 1L',             '7891234567896',  4.90, 'imgs/produto-7.png'),
+('Farinha de Trigo 1kg',          '7891234567897',  5.60, 'imgs/produto-8.png'),
+('Sal Refinado 1kg',              '7891234567898',  2.30, 'imgs/produto-9.png'),
+('Detergente Líquido 500ml',      '7891234567899',  2.10, 'imgs/produto-10.png');
