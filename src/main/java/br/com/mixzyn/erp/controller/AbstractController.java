@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import br.com.mixzyn.erp.service.AbstractService;
 
 public class AbstractController<T> implements IController<T> {
-    protected AbstractService<T> service;
+    protected final AbstractService<T> service;
 
     public AbstractController (AbstractService<T> service) {
         this.service = service;

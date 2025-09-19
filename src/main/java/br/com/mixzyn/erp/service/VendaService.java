@@ -11,7 +11,7 @@ import br.com.mixzyn.erp.repository.VendaRepository;
 
 @Service
 public class VendaService extends AbstractService<Venda> {
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
 
     public VendaService(VendaRepository repository, ProdutoService produtoService) {
         super(repository);

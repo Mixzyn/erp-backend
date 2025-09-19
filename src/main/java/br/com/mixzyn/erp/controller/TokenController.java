@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -25,7 +26,8 @@ public class TokenController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository,
+            BCryptPasswordEncoder passwordEncoder) {
         this.jwtEncoder = jwtEncoder;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -45,18 +47,18 @@ public class TokenController {
 
         // retorna a role do usuario
         var scopes = user.get().getRoles()
-            .stream()
-            .map(Role::getName)
-            .collect(Collectors.joining(" "));
+                .stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(" "));
 
         // construindo os atributos do jwt
         var claims = JwtClaimsSet.builder()
-            .issuer("market-erp")
-            .subject(user.get().getId().toString())
-            .issuedAt(now)
-            // .expiresAt(now.plusSeconds(expiresIn))
-            .claim("scope", scopes)
-            .build();
+                .issuer("market-erp")
+                .subject(user.get().getId().toString())
+                .issuedAt(now)
+                // .expiresAt(now.plusSeconds(expiresIn))
+                .claim("scope", scopes)
+                .build();
 
         // criando o jwt criptografado a partir dos atributos
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
@@ -66,6 +68,12 @@ public class TokenController {
 
     @GetMapping("verify-auth")
     public ResponseEntity<Void> verifyAuth() {
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @GetMapping("verify-admin-auth")
+    public ResponseEntity<Void> verifyAdminAuth() {
         return ResponseEntity.ok().build();
     }
 }

@@ -14,7 +14,7 @@ import br.com.mixzyn.erp.repository.ProdutoRepository;
 
 @Service
 public class ProdutoService extends AbstractService<Produto> {
-    private ProdutoRepository repository;
+    private final ProdutoRepository repository;
 
     @Value("${app.imgDir}")
     private String imgDir;

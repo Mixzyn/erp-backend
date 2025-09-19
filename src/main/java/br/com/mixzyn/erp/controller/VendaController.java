@@ -14,7 +14,7 @@ import br.com.mixzyn.erp.service.VendaService;
 @Controller
 @RequestMapping("/vendas")
 public class VendaController extends AbstractController<Venda> {
-    private VendaService service;
+    private final VendaService service;
 
     public VendaController(VendaService service) {
         super(service);
