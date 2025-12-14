@@ -60,14 +60,62 @@ public class ProdutoService extends AbstractService<Produto> {
             // Salva no disco
             produtoDTO.imagePath().transferTo(new File(caminhoArquivo));
 
-            // Salva apenas o caminho relativo no banco
             produto.setImagePath("imgs/" + nomeArquivo);
 
-            // Atualiza o produto com o caminho da imagem
             produto = repository.save(produto);
         }
 
         return produto;
+    }
+
+    public boolean editWithImage(Long id, ProdutoDTO produtoDTO) throws IllegalStateException, IOException {
+        if (repository.existsById(id)) {
+            Produto produto = this.findById(id).get();
+
+            if (produtoDTO.descricao() != null) {
+                produto.setDescricao(produtoDTO.descricao());
+            }
+
+            if (produtoDTO.codigo() != null) {
+                produto.setCodigo(produtoDTO.codigo());
+            }
+
+            if (produtoDTO.precoUnitario() != null) {
+                produto.setPrecoUnitario(produtoDTO.precoUnitario());
+            }
+
+            repository.save(produto);
+
+            if (produtoDTO.imagePath() != null && !produtoDTO.imagePath().isEmpty()) {
+    
+                File diretorio = new File(imgDir);
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs();
+                }
+    
+                // Extrai a extensão do arquivo original
+                String originalFilename = produtoDTO.imagePath().getOriginalFilename();
+                String extension = "";
+                if (originalFilename != null && originalFilename.contains(".")) {
+                    extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                }
+    
+                // Define o nome padronizado: produto-{id}.extensão
+                String nomeArquivo = "produto-" + produto.getId() + extension;
+                String caminhoArquivo = imgDir + File.separator + nomeArquivo;
+    
+                // Salva no disco
+                produtoDTO.imagePath().transferTo(new File(caminhoArquivo));
+    
+                produto.setImagePath("imgs/" + nomeArquivo);
+    
+                produto = repository.save(produto);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public Optional<Produto> findByCodigo(String codigo) {

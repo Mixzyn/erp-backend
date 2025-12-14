@@ -57,4 +57,8 @@ public class UserService {
         }
         return false;
     }
+
+    public List<User> findUsersByUsername(String username) {
+        return repository.findByUsernameContainingIgnoreCase(username);
+    }
 }

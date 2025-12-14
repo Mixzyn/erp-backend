@@ -1,5 +1,6 @@
 package br.com.mixzyn.erp.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,4 +12,5 @@ import br.com.mixzyn.erp.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUsername(String username);
+    List<User> findByUsernameContainingIgnoreCase(String descricao);
 }

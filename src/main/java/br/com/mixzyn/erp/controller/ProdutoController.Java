@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +47,45 @@ public class ProdutoController extends AbstractController<Produto> {
         try {
             novoProduto = service.createWithImage(produto);
             return ResponseEntity.ok(novoProduto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Produto> putJson(@PathVariable Long id, @RequestBody Produto produto) {
+        Produto produtoAlterado = service.findById(id).get();
+
+        if (produto.getCodigo() != null) {
+            produtoAlterado.setCodigo(produto.getCodigo());
+        }
+
+        if (produto.getDescricao() != null) {
+            produtoAlterado.setDescricao(produto.getDescricao());
+        }
+
+        if (produto.getPrecoUnitario() != null) {
+            produtoAlterado.setPrecoUnitario(produto.getPrecoUnitario());
+        }
+
+        if (service.update(produtoAlterado)) {
+            return ResponseEntity.ok(produtoAlterado);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Produto> putFormData(@PathVariable Long id, @ModelAttribute ProdutoDTO produtoDTO) {
+        Produto produtoAlterado = new Produto();
+
+        try {
+            if (service.editWithImage(id, produtoDTO)) {
+                produtoAlterado = service.findById(id).get();
+                return ResponseEntity.ok(produtoAlterado);
+            }
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
