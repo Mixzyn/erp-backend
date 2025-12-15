@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,6 +56,27 @@ public class UserController {
         service.create(newUser);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @Transactional
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> editUser(@PathVariable UUID id, @RequestBody CreateUserDTO userDto) {
+        User updatedUser = service.findById(id).get();
+
+        if (userDto.username() != null) {
+            updatedUser.setUsername(userDto.username());
+        }
+
+        if (userDto.password() != null) {
+            updatedUser.setPassword(passwordEncoder.encode(userDto.password()));
+        }
+
+        if (service.update(updatedUser)) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
