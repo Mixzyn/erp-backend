@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.mixzyn.erp.dto.LoginRequest;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,15 +39,8 @@ public class User {
     private String password;
 
     // criando a relacao muitos para muitos entre usuarios e roles
-    @ManyToMany(
-            // definindo cascateamento para ALL, todas as alteracoes na tabela serao
-            // replicadas
-            cascade = CascadeType.ALL,
-            // define a forma de comunicacao com o banco de dados, o EAGER sempre consulta o
-            // banco de dados,
-            // ja o LAZY consulta apenas quando utilizamos um atributo relacionado
-            fetch = FetchType.EAGER
-    )
+    // define a forma de comunicacao com o banco de dados, o EAGER sempre consulta o banco de dados
+    @ManyToMany(fetch = FetchType.EAGER)
 
     // criando uma tabela intermediaria para relacionar usuarios e roles
     @JoinTable(
