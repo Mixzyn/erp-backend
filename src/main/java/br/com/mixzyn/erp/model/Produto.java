@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,14 +27,17 @@ public class Produto extends AbstractEntity {
     private String codigo;
 
     @Column(name = "preco_unitario", nullable = false, precision = 10, scale = 2)
+    @Positive
     private BigDecimal precoUnitario;
 
     @Column(name = "image_path", nullable = true)
     private String imagePath;
-    
-/*     @Column(length = 100)
-    private String categoria;
 
-    @Column(length = 100)
-    private String fabricante; */
+    /*
+     * @Column(length = 100)
+     * private String categoria;
+     * 
+     * @Column(length = 100)
+     * private String fabricante;
+     */
 }

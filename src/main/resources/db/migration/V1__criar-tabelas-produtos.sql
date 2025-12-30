@@ -36,7 +36,7 @@ CREATE TABLE tb_produto (
     image_path VARCHAR,
     -- categoria VARCHAR(100),
     -- fabricante VARCHAR(100),
-    CONSTRAINT chk_preco_positivo CHECK (preco_unitario >= 0)
+    CONSTRAINT chk_preco_positivo CHECK (preco_unitario > 0)
 );
 
 -- Tabela de Estoque
@@ -101,7 +101,7 @@ CREATE TABLE tb_item_venda (
     FOREIGN KEY (id_venda) REFERENCES tb_venda(id),
     FOREIGN KEY (id_produto) REFERENCES tb_produto(id),
     CONSTRAINT chk_quantidade_venda_positiva CHECK (quantidade > 0),
-    CONSTRAINT chk_preco_venda_positivo CHECK (preco_unitario >= 0)
+    CONSTRAINT chk_preco_venda_positivo CHECK (preco_unitario > 0)
 );
 
 /* CREATE TABLE NOTA_FISCAL_VENDA (
