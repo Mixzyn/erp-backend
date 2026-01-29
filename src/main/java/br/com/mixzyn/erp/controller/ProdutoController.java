@@ -92,6 +92,16 @@ public class ProdutoController extends AbstractController<Produto> {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Produto>> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping
+    public List<Produto> getAllProdutos() {
+        return service.findAll();
+    }
+
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<Optional<Produto>> getByCodigo(@PathVariable String codigo) {
         return ResponseEntity.ok(service.findByCodigo(codigo));

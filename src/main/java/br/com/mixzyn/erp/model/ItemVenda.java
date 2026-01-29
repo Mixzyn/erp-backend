@@ -32,6 +32,7 @@ public class ItemVenda extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_produto", nullable = false)
+    @JsonIgnore
     private Produto produto;
 
     @Column(nullable = false)
