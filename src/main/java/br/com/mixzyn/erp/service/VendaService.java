@@ -30,7 +30,7 @@ public class VendaService extends AbstractService<Venda> {
 
         for (ItemVendaCreateDTO itemVendaDTO : vendaDTO.itens()) {
             Produto produto = produtoService.findById(itemVendaDTO.idProduto())
-             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
             ItemVenda item = new ItemVenda();
             item.setProduto(produto);
@@ -44,17 +44,17 @@ public class VendaService extends AbstractService<Venda> {
 
     public VendaDetailsDTO getVendaDetails(Long id) {
         Venda venda = repository.findById(id)
-         .orElseThrow(() -> new RuntimeException("Venda não encontrada"));
+                .orElseThrow(() -> new RuntimeException("Venda não encontrada"));
 
         List<ItemVendaDetailsDTO> itensDTO = venda.getItens().stream()
-         .map(item -> new ItemVendaDetailsDTO(
-             item.getProduto().getId(),
-             item.getProduto().getDescricao(),
-             item.getQuantidade(),
-             item.getPrecoUnitario(),
-             item.getProduto().getImagePath()
-         ))
-         .toList();
+                .map(item -> new ItemVendaDetailsDTO(
+                        item.getId(),
+                        item.getProduto().getId(),
+                        item.getProduto().getDescricao(),
+                        item.getQuantidade(),
+                        item.getPrecoUnitario(),
+                        item.getProduto().getImagePath()))
+                .toList();
 
         return new VendaDetailsDTO(venda.getId(), venda.getData(), venda.getValorTotal(), itensDTO);
     }

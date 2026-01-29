@@ -14,6 +14,9 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
     @Query("""
                select new br.com.mixzyn.erp.dto.VendaResumoDTO(v.id, v.data, v.valorTotal)
                from Venda v
+               order by v.data desc
             """)
     List<VendaResumoDTO> findAllResumo();
+
+    List<Venda> findAllByOrderByDataDesc();
 }
